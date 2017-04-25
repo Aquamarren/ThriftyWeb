@@ -17,7 +17,7 @@
 		}
 	}
 	else{
-		$sql2 = "INSERT INTO SAVINGS (UserName, SavingsID, SavingsAmount, SavingsDate, UserID) 
+		$sql2 = "INSERT INTO savings (UserName, SavingsID, SavingsAmount, SavingsDate, UserID) 
 		VALUES('$userName', '$savingsID', '$savingsAmount', '$savingsDate', '$userID')";
 				$result2 =mysqli_query($con, $sql2);
 	}

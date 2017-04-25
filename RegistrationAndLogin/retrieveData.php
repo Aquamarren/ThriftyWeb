@@ -3,9 +3,9 @@
 	$response = array();
 	require_once('dbConnect.php');
 	
-	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM REPORTS 
+	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM reports 
 					WHERE ExpenseDate = CURDATE() AND CategoryName = 'food'");	
-	$result1 = mysqli_query($con,"SELECT * FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'food' ORDER BY PercentIncrease DESC");						
+	$result1 = mysqli_query($con,"SELECT * FROM reports WHERE ExpenseDate = CURDATE() AND CategoryName = 'food' ORDER BY PercentIncrease DESC");						
 	
 	$previous ='';	
 	$row = mysqli_fetch_array($result);

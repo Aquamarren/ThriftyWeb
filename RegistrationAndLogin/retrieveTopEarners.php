@@ -4,8 +4,8 @@
 	require_once('dbConnect.php');	
 	
 		
-	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(SavingsAmount)) AS count FROM SAVINGS WHERE SavingsDate = CURDATE()");	
-	$result1 = mysqli_query($con,"SELECT * FROM SAVINGS WHERE SavingsDate = CURDATE() ORDER BY SavingsAmount DESC");	
+	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(SavingsAmount)) AS count FROM savings WHERE SavingsDate = CURDATE()");	
+	$result1 = mysqli_query($con,"SELECT * FROM savings WHERE SavingsDate = CURDATE() ORDER BY SavingsAmount DESC");	
 	
 	$previous ='';	
 	$row = mysqli_fetch_array($result);
