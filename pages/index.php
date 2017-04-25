@@ -80,7 +80,7 @@ header('location:login.php');
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            
+                     
                             <!-- /input-group -->
                         </li>
                         <li>
@@ -129,12 +129,13 @@ header('location:login.php');
 							<h4>Andy</h4><hr><br>
 							<h4>Nea</h4><hr><br>-->
 							<?php 	
-require_once('dbConnect1.php');							
-	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM REPORTS 
-				WHERE ExpenseDate = CURDATE() AND (CategoryName = 'shoes' || CategoryName = 'jewelry')");	
-	$result1 = mysqli_query($con,"SELECT *, SUM(PercentIncrease) AS Percentage, SUM(ExpenseAmount) AS AmountExpense 
-	FROM REPORTS WHERE ExpenseDate = CURDATE() AND (CategoryName = 'shoes' || CategoryName = 'jewelry')  GROUP BY UserID
-	ORDER BY PercentIncrease DESC");						
+require_once('dbconnect1.php');							
+	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count
+	FROM reports WHERE ExpenseDate = CURDATE() AND (CategoryName = 'shoes' || CategoryName = 'jewelry')");	
+	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), UserName, CategoryName, ExpenseDate,
+	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM reports 
+	WHERE ExpenseDate = CURDATE() AND (CategoryName = 'shoes' || CategoryName = 'jewelry') GROUP BY  UserID
+	ORDER BY PercentIncrease DESC");					
 	
 	$previous ='';	
 	$row = mysqli_fetch_array($result);
@@ -159,10 +160,10 @@ require_once('dbConnect1.php');
 			$rank[$i]= $rank[$i-1]+1;
 		}	
 		$previous = $current;		
-		if($rank[$i] <= 10){			
-			$b = $row['UserName'];			
-			$c = $row['AmountExpense'];
-			echo "<h4>".$b." - ‎₱".$c."</h4><hr><br>";
+		if($rank[$i] <= 4){
+			$a = $row['UserID'];
+			$b = $row['UserName'];						
+			echo "<h4>".$b."</h4><hr><br>";
 		}
 		
 	}				
@@ -245,11 +246,16 @@ require_once('dbConnect1.php');
                         <div class="panel-heading"><center>
                             <h4>Top Glutton</h4></center>
                         </div>
-                        <div class="panel-body">
-						<?php 
-	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'food'");	
-	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), ID, UserName, CategoryName, ExpenseAmount, ExpenseDate, PercentIncrease 
-	FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'food' ORDER BY PercentIncrease DESC");						
+                        <div class="panel-body">						
+							<?php 		
+									
+									require_once('dbconnect1.php');		
+	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count
+	FROM reports WHERE ExpenseDate = CURDATE() AND (CategoryName = 'food' || CategoryName = 'coffee' || CategoryName = 'grocery')");	
+	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), UserName, CategoryName, ExpenseDate,
+	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM reports 
+	WHERE ExpenseDate = CURDATE() AND (CategoryName = 'food' || CategoryName = 'coffee' || CategoryName = 'grocery') GROUP BY UserID
+	ORDER BY PercentIncrease DESC");						
 	
 	$previous ='';	
 	$row = mysqli_fetch_array($result);
@@ -261,7 +267,7 @@ require_once('dbConnect1.php');
 	$rank[0]= 0;
 	for($i = 1; $i <=$numrows; $i++){
 		$row = mysqli_fetch_array($result1);	
-		$current = $row['PercentIncrease'];
+		$current = $row['Percentage'];
 	//while($rank[$i] <= 5)		{
 		if($current == $previous) {			
 			echo "\n";	
@@ -275,11 +281,14 @@ require_once('dbConnect1.php');
 			//echo $rank[$i];echo " ";
 		}	
 		$previous = $current;		
-		if($rank[$i] <= 10){
+		if($rank[$i] <= 4){
+			$id = $row['UserID'];
 			$b = $row['UserName'];
-			$d = $row['ExpenseAmount'];	
-			echo "<tbody><tr>";            
-			echo "<h4>".$b." - ‎₱".$d."</h4><hr><br>";	
+			$c = $row['CategoryName'];
+			$d = $row['AmountExpense'];
+			$e = $row['ExpenseDate'];
+			$current = $row['Percentage'];		
+			echo"<h4>".$b."</h4><hr><br>";
 		}
 	//}
 		
@@ -302,10 +311,12 @@ require_once('dbConnect1.php');
                             <h4>Top Cosmoholic</h4></center>
                         </div>
                         <div class="panel-body">
-							<?php
-	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup'");	
-	$result1 = mysqli_query($con,"SELECT * FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup' ORDER BY PercentIncrease DESC");						
-	
+							<?php 
+							require_once('dbconnect1.php');	
+	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM reports WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup'");	
+	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), UserName, CategoryName, ExpenseAmount, ExpenseDate, PercentIncrease
+	FROM reports WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup' ORDER BY PercentIncrease DESC");						
+		
 	$previous ='';	
 	$row = mysqli_fetch_array($result);
 	$numrows = mysqli_num_rows($result1);
@@ -330,64 +341,13 @@ require_once('dbConnect1.php');
 		}	
 		$previous = $current;		
 		if($rank[$i] <= 10){
+			$id = $row['UserID'];
 			$b = $row['UserName'];
-			$d = $row['ExpenseAmount'];	
-			echo "<tbody><tr>";            
-			echo "<h4>".$b." - ‎₱".$d."</h4><hr><br>";	
-		}
-	}																			
-									
-									?>
-						</div>
-						 <a href="leaderboard.php">
-                        <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-						</a>
-                    </div>
-				</div>
-				
-				
-		<div class="col-lg-6 col-md-6">
-                    <div class="panel panel-info">
-                        <div class="panel-heading"><center>
-                            <h4>Top Dora the Explorer</h4></center>
-                        </div>
-                        <div class="panel-body">
-							<?php
-	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'commute'");	
-	$result1 = mysqli_query($con,"SELECT * FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'commute' ORDER BY PercentIncrease DESC");						
-	
-	$previous ='';	
-	$row = mysqli_fetch_array($result);
-	$numrows = mysqli_num_rows($result1);
-	$a = $row['count'];
-	
-	$rank=array();
-	$x=0;
-	$rank[0]= 0;
-	for($i = 1; $i <=$numrows; $i++){
-		$row = mysqli_fetch_array($result1);	
-		$current = $row['PercentIncrease'];
-			
-		if($current == $previous) {			
-			//echo "\n";	
-			$rank[$i] = $rank[$i-1];
-			$x=$i-1;
-			//echo $x;echo " ";
-			//echo $rank[$i];echo " ";
-		}
-		else if($current != $previous){						
-			$rank[$i]= $rank[$i-1]+1;
-		}	
-		$previous = $current;		
-		if($rank[$i] <= 10){
-			$b = $row['UserName'];
-			$d = $row['ExpenseAmount'];	
-			echo "<tbody><tr>";            
-			echo "<h4>".$b." - ‎₱".$d."</h4><hr><br>";	
+			$c = $row['CategoryName'];
+			$d = $row['ExpenseAmount'];
+			$e = $row['ExpenseDate'];
+			$current = $row['PercentIncrease'];					
+			echo "<h4>".$b."</h4><hr><br>";
 		}
 	}																			
 									
