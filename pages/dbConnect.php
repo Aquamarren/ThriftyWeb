@@ -8,7 +8,7 @@
  
 $mysql_hostname = "localhost";
 $mysql_user = "root";
-$mysql_password = "";
+$mysql_password = "1234";
 $mysql_database = "thriftyadmin";
 
 $con = mysql_connect($mysql_hostname, $mysql_user, $mysql_password) or die("Opps some thing went wrong");
