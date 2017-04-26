@@ -144,9 +144,9 @@ header('location:login.php');
 
 									
 	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count
-	FROM REPORTS WHERE ExpenseDate = CURDATE() AND (CategoryName = 'shoes' || CategoryName = 'jewelry')");	
+	FROM reports WHERE ExpenseDate = CURDATE() AND (CategoryName = 'shoes' || CategoryName = 'jewelry')");	
 	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), UserName, CategoryName, ExpenseDate,
-	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM REPORTS 
+	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM reports 
 	WHERE ExpenseDate = CURDATE() AND (CategoryName = 'shoes' || CategoryName = 'jewelry') GROUP BY UserID
 	ORDER BY SUM(DISTINCT(PercentIncrease)) DESC");						
 	
@@ -223,9 +223,9 @@ header('location:login.php');
 									<?php 		
 									
 	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count
-	FROM REPORTS WHERE ExpenseDate = CURDATE() AND (CategoryName = 'food' || CategoryName = 'coffee' || CategoryName = 'grocery')");	
+	FROM reports WHERE ExpenseDate = CURDATE() AND (CategoryName = 'food' || CategoryName = 'coffee' || CategoryName = 'grocery')");	
 	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), UserName, CategoryName, ExpenseDate,
-	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM REPORTS 
+	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM reports 
 	WHERE ExpenseDate = CURDATE() AND (CategoryName = 'food' || CategoryName = 'coffee' || CategoryName = 'grocery') GROUP BY UserID
 	ORDER BY SUM(DISTINCT(PercentIncrease)) DESC");						
 	
@@ -304,9 +304,9 @@ header('location:login.php');
                                         </tr>
                                     </thead>
 									<?php 
-	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup'");	
+	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count FROM reports WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup'");	
 	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), UserName, CategoryName, ExpenseAmount, ExpenseDate, PercentIncrease
-	FROM REPORTS WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup' ORDER BY PercentIncrease DESC");						
+	FROM reports WHERE ExpenseDate = CURDATE() AND CategoryName = 'makeup' ORDER BY PercentIncrease DESC");						
 		
 	$previous ='';	
 	$row = mysqli_fetch_array($result);
@@ -377,9 +377,9 @@ header('location:login.php');
                                     </thead>
 									<?php 
 	$result = mysqli_query($con,"SELECT COUNT(DISTINCT(PercentIncrease)) AS count
-	FROM REPORTS WHERE ExpenseDate = CURDATE() AND (CategoryName = 'commute' || CategoryName = 'flight')");	
+	FROM reports WHERE ExpenseDate = CURDATE() AND (CategoryName = 'commute' || CategoryName = 'flight')");	
 	$result1 = mysqli_query($con,"SELECT DISTINCT(UserID), UserName, CategoryName, ExpenseDate,
-	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM REPORTS 
+	SUM(DISTINCT(PercentIncrease)) AS Percentage, SUM(DISTINCT(ExpenseAmount)) AS AmountExpense  FROM reports 
 	WHERE ExpenseDate = CURDATE() AND (CategoryName = 'commute' || CategoryName = 'flight') GROUP BY UserID
 	ORDER BY SUM(DISTINCT(PercentIncrease)) DESC");							
 	
