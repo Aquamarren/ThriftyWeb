@@ -4,9 +4,11 @@
 	$savingsID = $_POST['SavingsID'];
 	$savingsAmount = $_POST['SavingsAmount'];
 	$savingsDate = $_POST['SavingsDate'];
-	
+			
  
 	require_once('dbConnect.php');	
+	
+	
 	$result = mysqli_query($con, "SELECT * FROM savings WHERE SavingsID = $savingsID AND UserID = $userID AND SavingsDate = CURDATE()");
 	$numrows = mysqli_num_rows($result);
 	if($numrows!=0){
@@ -17,7 +19,7 @@
 		}
 	}
 	else{
-		$sql2 = "INSERT INTO savings (UserName, SavingsID, SavingsAmount, SavingsDate, UserID) 
+		$sql2 = "INSERT INTO SAVINGS (UserName, SavingsID, SavingsAmount, SavingsDate, UserID) 
 		VALUES('$userName', '$savingsID', '$savingsAmount', '$savingsDate', '$userID')";
 				$result2 =mysqli_query($con, $sql2);
 	}
